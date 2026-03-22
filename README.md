@@ -29,6 +29,19 @@ npm run build
 npm run preview
 ```
 
+## GitHub Pages Yayin
+Bu proje `hamdiituu/me` reposu icin GitHub Pages'e gore ayarlandi.
+
+- Vite `base` path otomatik olarak `/me/` olacak sekilde ayarlandi.
+- Otomatik deploy workflow dosyasi eklendi: `.github/workflows/deploy-pages.yml`.
+- Uygulama adresi: `https://hamdiituu.github.io/me/`
+
+Gerekli repository ayari:
+1. GitHub'da `me` reposuna gir.
+2. `Settings > Pages` ac.
+3. `Build and deployment` bolumunde `Source` olarak `GitHub Actions` sec.
+4. `main` veya `master` branch'e push yap.
+
 ## Klasor Yapisi
 ```text
 src/
