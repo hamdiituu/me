@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import SiteHeader from "./components/SiteHeader";
+import ProfileSidebar from "./components/ProfileSidebar";
 import HeroSection from "./components/HeroSection";
 import ProductsSection from "./components/ProductsSection";
 import ProjectsSection from "./components/ProjectsSection";
@@ -180,17 +181,23 @@ function App() {
           onThemeToggle={() => setTheme((current) => (current === "light" ? "dark" : "light"))}
         />
 
-        <HeroSection t={t} />
-        <ProductsSection t={t} products={localizedProducts} />
-        <ProjectsSection
-          t={t}
-          repos={repos}
-          repoState={repoState}
-          readmePreviews={readmePreviews}
-          readmeLoadingMap={readmeLoadingMap}
-          language={language}
-        />
-        <SiteFooter t={t} />
+        <div className="github-shell">
+          <ProfileSidebar t={t} productCount={localizedProducts.length} repoCount={repos.length} />
+
+          <section className="main-feed">
+            <HeroSection t={t} />
+            <ProductsSection t={t} products={localizedProducts} />
+            <ProjectsSection
+              t={t}
+              repos={repos}
+              repoState={repoState}
+              readmePreviews={readmePreviews}
+              readmeLoadingMap={readmeLoadingMap}
+              language={language}
+            />
+            <SiteFooter t={t} />
+          </section>
+        </div>
       </main>
     </div>
   );
