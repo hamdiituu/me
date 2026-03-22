@@ -1,8 +1,5 @@
 import { localeOptions } from "../data/content";
 
-const REPO_CACHE_KEY = "repo_cache_v1";
-const REPO_CACHE_TTL_MS = 1000 * 60 * 30;
-
 export function formatDate(value, locale) {
   try {
     return new Intl.DateTimeFormat(locale, {
@@ -56,56 +53,4 @@ export function getInitialLanguage() {
   }
 
   return "tr";
-}
-
-function isFresh(cachedAt, ttlMs) {
-  if (!cachedAt) {
-    return false;
-  }
-
-  return Date.now() - Number(cachedAt) < ttlMs;
-}
-
-export function readRepoCache({ allowStale = false } = {}) {
-  if (typeof window === "undefined") {
-    return [];
-  }
-
-  try {
-    const raw = window.localStorage.getItem(REPO_CACHE_KEY);
-    if (!raw) {
-      return [];
-    }
-
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed?.repos)) {
-      return [];
-    }
-
-    if (!allowStale && !isFresh(parsed?.cachedAt, REPO_CACHE_TTL_MS)) {
-      return [];
-    }
-
-    return parsed.repos;
-  } catch {
-    return [];
-  }
-}
-
-export function writeRepoCache(repos) {
-  if (typeof window === "undefined" || !Array.isArray(repos)) {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(
-      REPO_CACHE_KEY,
-      JSON.stringify({
-        repos,
-        cachedAt: Date.now(),
-      }),
-    );
-  } catch {
-    // ignore storage errors
-  }
 }
