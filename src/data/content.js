@@ -30,7 +30,7 @@ export const translations = {
       "Bu sayfa sadece bana ait urunleri ve GitHub uretimimi gosterir. Gereksiz bolumler olmadan sade bir vitrin yapisi kullanir.",
     quickCards: [
       { title: "3 Urun", text: "cvmakes, adres100, legiflare" },
-      { title: "GitHub", text: "hamdiituu hesabindan canli repo listesi" },
+      { title: "GitHub", text: "hamdiituu hesabindan kayitli public repo listesi" },
       { title: "Tema", text: "Light / dark gecis destekli sade arayuz" },
     ],
     productsTitle: "Urunlerim",
@@ -51,9 +51,11 @@ export const translations = {
       },
     },
     projectsTitle: "GitHub Projelerim",
-    projectsDescription: "Public repo listesi otomatik yenilenir. Fork repolar filtrelenir.",
+    projectsDescription: "Public repolar tek seferlik kaydedildi. Fork repolar filtrelenir.",
     loadingRepos: "Repository listesi yukleniyor...",
     repoError: "GitHub API su an cevap vermedi. Yedek repository listesi gosteriliyor.",
+    repoRateLimit:
+      "GitHub API rate limit asildi. Onbellek/yedek liste gosteriliyor. Bir sure sonra tekrar deneyin.",
     repoNoDescription: "Aciklama bulunamadi. Detaylar icin repository sayfasini acabilirsin.",
     sitePreviewLabel: "Site Preview",
     readmeLabel: "README Preview",
@@ -73,7 +75,7 @@ export const translations = {
       "This page focuses only on my own products and GitHub output. It keeps the layout simple and practical.",
     quickCards: [
       { title: "3 Products", text: "cvmakes, adres100, legiflare" },
-      { title: "GitHub", text: "Live repository list from hamdiituu" },
+      { title: "GitHub", text: "Saved public repository list from hamdiituu" },
       { title: "Theme", text: "Simple UI with light / dark switch" },
     ],
     productsTitle: "My Products",
@@ -93,9 +95,11 @@ export const translations = {
       },
     },
     projectsTitle: "My GitHub Projects",
-    projectsDescription: "Public repositories are loaded automatically. Forks are filtered.",
+    projectsDescription: "Public repositories are saved from a one-time snapshot. Forks are filtered.",
     loadingRepos: "Loading repository list...",
     repoError: "GitHub API is unavailable right now. Showing fallback repository list.",
+    repoRateLimit:
+      "GitHub API rate limit was exceeded. Showing cached/fallback repositories for now.",
     repoNoDescription: "No description available. Open the repository page for details.",
     sitePreviewLabel: "Site Preview",
     readmeLabel: "README Preview",

@@ -13,9 +13,7 @@ function SiteHeader({
           <span className="brand-mark">◉</span>
           hamdiituu
         </a>
-        <div className="header-search-shell">
-          <input className="header-search" placeholder="Search or jump to..." />
-        </div>
+       
       </div>
 
       <div className="header-right">
