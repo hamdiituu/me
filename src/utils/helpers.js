@@ -1,5 +1,10 @@
 import { localeOptions } from "../data/content";
 
+const REPO_CACHE_KEY = "repo_cache_v1";
+const README_CACHE_KEY = "readme_cache_v1";
+const REPO_CACHE_TTL_MS = 1000 * 60 * 30;
+const README_CACHE_TTL_MS = 1000 * 60 * 60 * 24;
+
 export function formatDate(value, locale) {
   try {
     return new Intl.DateTimeFormat(locale, {
@@ -18,7 +23,7 @@ export function formatDate(value, locale) {
 
 export function sortRepos(data) {
   return [...data]
-    .filter((repo) => !repo.fork)
+    .filter((repo) => !repo.fork && !repo.private)
     .sort((left, right) => {
       if (right.stargazers_count !== left.stargazers_count) {
         return right.stargazers_count - left.stargazers_count;
@@ -78,4 +83,90 @@ export function extractReadmePreview(markdown, maxLength = 210) {
   }
 
   return `${normalized.slice(0, maxLength).trim()}...`;
+}
+
+function isFresh(cachedAt, ttlMs) {
+  if (!cachedAt) {
+    return false;
+  }
+
+  return Date.now() - Number(cachedAt) < ttlMs;
+}
+
+export function readRepoCache() {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const raw = window.localStorage.getItem(REPO_CACHE_KEY);
+    if (!raw) {
+      return [];
+    }
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed?.repos) || !isFresh(parsed?.cachedAt, REPO_CACHE_TTL_MS)) {
+      return [];
+    }
+
+    return parsed.repos;
+  } catch {
+    return [];
+  }
+}
+
+export function writeRepoCache(repos) {
+  if (typeof window === "undefined" || !Array.isArray(repos)) {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(
+      REPO_CACHE_KEY,
+      JSON.stringify({
+        repos,
+        cachedAt: Date.now(),
+      }),
+    );
+  } catch {
+    // ignore storage errors
+  }
+}
+
+export function readReadmeCache() {
+  if (typeof window === "undefined") {
+    return {};
+  }
+
+  try {
+    const raw = window.localStorage.getItem(README_CACHE_KEY);
+    if (!raw) {
+      return {};
+    }
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") {
+      return {};
+    }
+
+    return parsed;
+  } catch {
+    return {};
+  }
+}
+
+export function writeReadmeCache(cache) {
+  if (typeof window === "undefined" || !cache || typeof cache !== "object") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(README_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // ignore storage errors
+  }
+}
+
+export function isReadmeCacheFresh(cachedAt) {
+  return isFresh(cachedAt, README_CACHE_TTL_MS);
 }

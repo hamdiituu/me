@@ -58,6 +58,7 @@ export const translations = {
     sitePreviewLabel: "Site Preview",
     readmeLabel: "README Preview",
     readmeLoading: "README yukleniyor...",
+    noReadmeRepos: "README bulunamayan repolar listede gosterilmez.",
     footerOwner: "Hamdi Tug",
   },
   en: {
@@ -99,6 +100,7 @@ export const translations = {
     sitePreviewLabel: "Site Preview",
     readmeLabel: "README Preview",
     readmeLoading: "Loading README preview...",
+    noReadmeRepos: "Repositories without README are skipped.",
     footerOwner: "Hamdi Tug",
   },
   de: {

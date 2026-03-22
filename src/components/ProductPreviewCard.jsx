@@ -4,18 +4,13 @@ function ProductPreviewCard({ product, t }) {
   return (
     <a className="product-card" href={product.href} target="_blank" rel="noreferrer">
       <div className="site-preview-shell">
-        <div className="site-preview-toolbar">
-          <span>{product.name}</span>
-          <span>{previewLabel}</span>
-        </div>
-        <iframe
-          className="site-preview-frame"
-          src={product.href}
-          title={`${product.name} preview`}
+        <img
+          className="site-preview-image"
+          src={product.previewImage}
+          alt={`${product.name} screenshot`}
           loading="lazy"
-          referrerPolicy="no-referrer"
         />
-        <div className="site-preview-overlay" />
+        <span className="site-preview-label">{previewLabel}</span>
       </div>
 
       <h3>{product.name}</h3>

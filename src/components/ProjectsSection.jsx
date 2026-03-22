@@ -1,6 +1,16 @@
 import RepoCard from "./RepoCard";
 
-function ProjectsSection({ t, repos, repoState, readmePreviews, readmeLoadingMap, language }) {
+function ProjectsSection({
+  t,
+  repos,
+  repoState,
+  readmePreviews,
+  readmeLoadingMap,
+  readmeLoading,
+  language,
+}) {
+  const showLoading = repoState.loading || readmeLoading;
+
   return (
     <section id="projects" className="section-card">
       <div className="section-head">
@@ -8,21 +18,26 @@ function ProjectsSection({ t, repos, repoState, readmePreviews, readmeLoadingMap
         <p>{t.projectsDescription}</p>
       </div>
 
-      {repoState.loading ? <div className="repo-status">{t.loadingRepos}</div> : null}
+      {showLoading ? <div className="repo-status">{t.loadingRepos}</div> : null}
       {repoState.hasError ? <div className="repo-status repo-status--warning">{t.repoError}</div> : null}
+      {!showLoading && !repoState.hasError && repos.length === 0 ? (
+        <div className="repo-status">{t.noReadmeRepos || t.repoNoDescription}</div>
+      ) : null}
 
-      <div className="repo-grid">
-        {repos.map((repo) => (
-          <RepoCard
-            key={repo.id}
-            repo={repo}
-            language={language}
-            t={t}
-            readmePreview={readmePreviews[repo.id]}
-            readmeLoading={Boolean(readmeLoadingMap[repo.id])}
-          />
-        ))}
-      </div>
+      {repos.length > 0 ? (
+        <div className="repo-grid">
+          {repos.map((repo) => (
+            <RepoCard
+              key={repo.id}
+              repo={repo}
+              language={language}
+              t={t}
+              readmePreview={readmePreviews[repo.id]}
+              readmeLoading={Boolean(readmeLoadingMap[repo.id])}
+            />
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }
